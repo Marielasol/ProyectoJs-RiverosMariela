@@ -1,0 +1,41 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.titulo{
+    text-align: center;
+}
+
+.imgProductos{
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+    margin-top: 1rem;
+}
+.ImagenIndex{
+    display: flex;
+    justify-content: center;
+    padding: 100px;
+}
+.card{
+    display: flex;
+    align-items: center;
+    margin: 0.5rem;
+}
+
+.colorBTN{
+    color: black;
+    background-color:beige;
+}
+.colorBTN:hover{
+    background-color:aquamarine;
+    color:black
+}
+.colorBotonC{
+    background-color: aquamarine;
+    color: black;
+}
+.colorBTNC{
+    background-color: blueviolet;
+    color: black;
+}
