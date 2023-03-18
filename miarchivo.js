@@ -25,7 +25,7 @@ console.log(productos);
 
 let carrito = [];
 
-if(localStorage.getItem("carrito")){
+if (localStorage.getItem("carrito")) {
     carrito = JSON.parse(localStorage.getItem("carrito"));
 }
 
@@ -65,75 +65,76 @@ const agregarAlCarrito = (id) => {
         const producto = productos.find(producto => producto.id === id);
         carrito.push(producto);
     }
-    calcularTotal();
 
     localStorage.setItem("carrito", JSON.stringify(carrito));
 }
-
+console.log(carrito)
 
 const contenedorCarrito = document.getElementById("contenedorCarrito");
 const verCarrito = document.getElementById("verCarrito");
 
+
 verCarrito.addEventListener("click", () => {
-    mostrarCarrito();
-})
-const mostrarCarrito = () => {
+    contenedorCarrito.style.display = "";
     contenedorCarrito.innerHTML = "";
-    carrito.forEach(producto => {
-        const card = document.createElement("div");
-        card.classList.add("col-xl-3", "col-md-6", "col-sm-12");
-        card.innerHTML = `
-            <div class="card">
-                <img src = "${producto.img}" class = "card-img-top imgProductos" alt = "${producto.nombre}"
-                <div>
-                    <h5>${producto.nombre} </h5>
-                    <p> ${producto.precio} </p>
-                    <p> ${producto.cantidad} </p>
-                    <button class = "btn colorBotonC" id= "eliminar${producto.id}"> Eliminar </button>
-                    <button class = "btn colorBTNC" id="finalizarCompra"> Finalizar Compra </button>
-                </div>
-        
-            </div>`
-        contenedorCarrito.appendChild(card);
+    const modalHeader = document.createElement("div")
+    modalHeader.className = "modal-header"
+    modalHeader.innerHTML = `
+    <h1 class=modal-header-title>Carrito</h1>
 
-        const boton = document.getElementById(`eliminar${producto.id}`)
-        boton.addEventListener("click", () => {
-            eliminarDelCarrito(producto.id);
+   `;
+    contenedorCarrito.append(modalHeader)
 
-        })
+    const modalbutton = document.createElement("button")
+    modalbutton.innerText = "X";
+
+    modalbutton.addEventListener("click", () => {
+        contenedorCarrito.style.display = "none";
 
     })
-    calcularTotal()
-}
-const eliminarDelCarrito = (id) => {
-    const producto = carrito.find(producto => producto.id === id);
-    const indice = carrito.indexOf(producto);
-    carrito.splice(indice, 1)
-    mostrarCarrito();
 
-    localStorage.setItem("carrito", JSON.stringify(carrito));
-}
+    modalHeader.append(modalbutton);
 
-const total = document.getElementById("total");
+    carrito.forEach((producto) => {
+        let carritoContent = document.createElement("div")
+        carritoContent.className = "modal-content"
+        carritoContent.innerHTML = "";
+        carritoContent.innerHTML = `
+        <div>
+        <img src="${producto.img}" class= "imgCarrito">
+        <p>${producto.nombre}</p>
+        </div>
+        <p>$ ${producto.precio}</p>
+        <div>
+        <p>${producto.cantidad}</p>
+        <button class="botonSumaResta" id= "agregarUnidad"> ➕</button><button class= "botonSumaResta">➖ </button>
+        </div>
+        `;
 
-const calcularTotal =() => {
-    let totalCompra = 0
-    carrito.forEach(producto => {
-        totalCompra += producto.precio * producto.cantidad;
+        contenedorCarrito.append(carritoContent)
+    });
 
-    })
-    total.innerHTML = `Total: $${totalCompra}`;
-}
-
+    const total = carrito.reduce((acc, el) => acc + el.precio, 0)
+    const totalCompra = document.createElement("div");
+    totalCompra.className = "total"
+    totalCompra.innerHTML = `Total a pagar: $ ${total}`;
+    contenedorCarrito.append(totalCompra)
+})
 const vaciarCarrito = document.getElementById("vaciarCarrito");
 
 vaciarCarrito.addEventListener("click", () => {
+    Swal.fire("Esta seguro que desea eliminar los productos?")
     eliminarTodoElCarrito();
+
 })
 
 const eliminarTodoElCarrito = () => {
     carrito = [];
-    mostrarCarrito();
+    carritoContent();
 
     localStorage.clear();
 }
+const finalizarCompra = document.getElementById("finalizarCompra")
+finalizarCompra.addEventListener("click", () => {
+    swal.fire("¡Gracias por su compra!")
+})

@@ -12,11 +12,25 @@
     object-fit: contain;
     margin-top: 1rem;
 }
-.ImagenIndex{
+.modal-content{
     display: flex;
-    justify-content: center;
-    padding: 100px;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: end;
+    
+    
 }
+
+
+
+.imgCarrito{
+    width: 150px;
+    height: 150px;
+    padding: 20px;
+    object-fit: contain;
+    margin-top: 1rem;  
+}
+
 .card{
     display: flex;
     align-items: center;
@@ -38,4 +52,17 @@
 .colorBTNC{
     background-color: blueviolet;
     color: black;
+}
+.botonSumaResta{
+    width: 28px;
+    border-radius: 28px;
+}
+.botonFooter{
+    display: flex;
+    justify-content: space-around;
+    align-items: end;
+    
+}
+.total{
+    font-size: 25pt;
 }
